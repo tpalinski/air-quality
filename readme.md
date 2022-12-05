@@ -6,5 +6,5 @@ The goal of this project is to highlight how the air quality in Gdańsk changes 
 
 ## Authors
 * Mateusz Naklicki (mateusz.naklicki06@gmail.com)
-* Adam Niesiobędzki (email)
+* Adam Niesiobędzki (adam.niesiobedzki@o2.pl)
 * Tymoteusz Paliński (tpalinski@icloud.com)
