@@ -1,5 +1,5 @@
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
 import { GraphData } from "../types";
 
 
@@ -11,6 +11,7 @@ export function GraphRenderer(props: Props){
             height={300}
             data={props.data}
         >
+            <CartesianGrid strokeDasharray="20 3" />
             <XAxis dataKey="time" />
             <YAxis />
             <Tooltip />
@@ -18,7 +19,7 @@ export function GraphRenderer(props: Props){
             <Line
                 type="monotone"
                 dataKey="value"
-                stroke="#00fff0"
+                stroke="#8d8741"
             />
         </LineChart>
     )
