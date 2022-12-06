@@ -20,6 +20,10 @@ def data_request(data_name, methods=['GET, POST']):
         response.status_code = 400
         return response
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return hello_world()
+
 def get_data(data_name):
     if (data_name not in ACCEPTED_DATA_REQUESTS):
         return False
