@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+}
+
+.Title {
+  width: 100%;
+  height: 100vh;
+  background-color: #DAAD86;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url('./img/banner.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.Content {
+  margin-top: 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Lore {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  background-color: #8d8741;
+  width: 60%;
+  border-radius: 1rem;
+  opacity: 0.8;
+}
