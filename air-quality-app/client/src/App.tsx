@@ -14,6 +14,10 @@ function App() {
       setGraphData(response)
     })
   }, [timePeriod])
+
+  const handlePeriodChange = (e: any) => {
+    setTimePeriod(timePeriod + 1)
+  }
   return (
     <div className="App">
       <div className='Title'>
@@ -25,6 +29,7 @@ function App() {
           <p>Lorem ipsum i takie tam</p>
         </div>
         <div className='Graphs'>
+          <button onClick={handlePeriodChange}> Fetch Data</button>
           <GraphsContainer text="CO" data={graphData?.co}/>
           <GraphsContainer text='NO2' data={graphData?.no2}/>
           <GraphsContainer text='PM10' data={graphData?.pa}/>
