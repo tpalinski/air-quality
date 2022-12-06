@@ -1,9 +1,11 @@
 from flask import Flask, Response, jsonify, request
 from waitress import serve
+from data_selector import DataSelector
 
 ACCEPTED_DATA_REQUESTS = ["pm10", "no2", "co"] 
 
 app = Flask("air_quality_backend")
+data_selector = DataSelector()
 
 @app.route("/")
 def hello_world():
@@ -27,10 +29,9 @@ def page_not_found(error):
 def get_data(data_name):
     if (data_name not in ACCEPTED_DATA_REQUESTS):
         return False
-    if (data_name == "co"):
-        pass
+    result = data_selector.select_by_date(data_name, "2021-02-02 10:00:00", "2021-02-02 11:00:00")
 
-    return False
+    return result
 
 if __name__ == "__main__":
     serve(app, host="localhost", port=3001)
