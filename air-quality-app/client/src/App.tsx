@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { GraphsContainer } from "./containers/GraphsContainer";
 
 function App() {
   return (
@@ -11,6 +12,11 @@ function App() {
         <div className='Lore'>
           <h3> Tytul tego wszystkiego</h3>
           <p>Lorem ipsum i takie tam</p>
+        </div>
+        <div className='Graphs'>
+          <GraphsContainer text="CO"/>
+          <GraphsContainer text='NO2'/>
+          <GraphsContainer text='PM10'/>
         </div>
       </div>
       
