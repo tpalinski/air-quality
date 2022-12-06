@@ -10,7 +10,7 @@ export function GraphsContainer(props: Props){
     return (
         <div className="GraphContainer">
             <h3>{props.text}</h3>
-            <GraphRenderer data={sampleData} />
+            <GraphRenderer data={props.data || sampleData} />
         </div>
     )
 }
