@@ -13,8 +13,8 @@ def hello_world():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-@app.route('/api/<path:station_name>')
-def data_request(station_name, methods=['GET, POST']):
+@app.route('/api/<path:station_name>', methods=['GET', 'POST'])
+def data_request(station_name):
     data = get_data(station_name)
     if (data):
         response = jsonify(data)
