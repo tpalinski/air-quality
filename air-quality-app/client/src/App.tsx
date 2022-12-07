@@ -6,6 +6,7 @@ import { GraphsContainer } from "./components/GraphsContainer";
 import { PeriodPicker } from "./components/PeriodPicker";
 import { GraphResponseData, TimePeriod } from "./types";
 import { getData, getDataDebug } from "./api/api";
+import { MapSelector } from './components/MapSelector';
 
 function App() {
   let [graphData, setGraphData] = useState<GraphResponseData>();
@@ -43,6 +44,7 @@ function App() {
           <GraphsContainer text='NO2' data={graphData?.no}/>
           <GraphsContainer text='PM10' data={graphData?.pm}/>
         </div>
+        <MapSelector />
       </div>
       
     </div>
