@@ -63,6 +63,48 @@ class DataSelector:
             "co": co_json
         }
         return json.dumps(combined_dict)
+    
+    def __select_grouped_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date, group_range):
+        # select by pollution_type and station
+        dataset = self.datasets[pollution_type][["data",station]]
+        
+        # select by date range
+        date_mask = (dataset["data"] >= start_date) & (dataset["data"] <= end_date)
+        selected_data = dataset.loc[date_mask]
+
+        # clean data (remove -1 entries)
+        selected_data = selected_data.loc[selected_data[station] >= 0]
+
+        # group data and drop NaN values
+        grouped_data = selected_data.groupby(pd.Grouper(key='data', axis=0, freq=f'{group_range}H')).max()
+        grouped_data.reset_index(inplace=True)
+        grouped_data.dropna(inplace=True)
+
+        # format data
+        grouped_data["data"] = grouped_data["data"].dt.strftime("%Y-%m-%d %H:%M")
+        print(grouped_data)
+
+        # prepare dicts
+        data_to_return = grouped_data.rename(columns={"data": "time", station: "value"})
+        data_array = (data_to_return.to_dict(orient="records"))
+        
+        return data_array
+
+
+    def select_grouped_pollutions_by_station(self, station, start_date, end_date, group_range):
+        if (valid_pd_date(start_date) == False) or \
+           (valid_pd_date(end_date) == False):
+            return ""
+        
+        no_json = self.__select_grouped_pollution_by_station_and_date("no2", station, start_date, end_date, group_range)
+        pm_json = self.__select_grouped_pollution_by_station_and_date("pm10", station, start_date, end_date, group_range)
+        co_json = self.__select_grouped_pollution_by_station_and_date("co", station, start_date, end_date, group_range)
+        combined_dict = {
+            "no": no_json,
+            "pm": pm_json,
+            "co": co_json
+        }
+        return json.dumps(combined_dict)
 
 
 if __name__ == "__main__":

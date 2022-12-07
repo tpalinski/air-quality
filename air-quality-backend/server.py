@@ -17,7 +17,7 @@ def hello_world():
 @app.route('/api/<path:station_name>', methods=['GET', 'POST'])
 def data_request(station_name):
     request_args = get_request_args()
-    data = get_data(station_name, request_args["start_date"], request_args["end_date"])
+    data = get_data(station_name, request_args)
     if (data):
         response = jsonify(data)
     else:
@@ -42,13 +42,31 @@ def get_request_args():
     if (request.data):
         request_args = json.loads(request.data.decode("utf-8"))
     
+    if ("type" not in request_args):
+        request_args["type"] = "all"
+    
     return request_args
 
-def get_data(station_name, start_date, end_date):
+def get_data(station_name, request_args):
     if (station_name not in ACCEPTED_STATION_REQUESTS):
         return False
-    result = data_selector.select_pollutions_by_station(station_name, start_date, end_date)
-
+    
+    result = ""
+    if (request_args["type"] == "all"):
+        result = data_selector.select_pollutions_by_station(
+                    station_name, 
+                    request_args["start_date"], 
+                    request_args["end_date"]
+                    )
+    elif (request_args["type"] == "max"):
+        group_range = request_args["group_range"] if "group_range" in request_args else 12 
+        result = data_selector.select_grouped_pollutions_by_station(
+            station_name, 
+            request_args["start_date"], 
+            request_args["end_date"],
+            group_range
+            )
+    print(result)
     return result
 
 if __name__ == "__main__":
