@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 
 def valid_pd_date(date):
     try:
@@ -21,6 +22,7 @@ class DataSelector:
             print("ERROR: Failed to load data files!")
 
     # pollution_type: co/no2/pm10
+    # returns array of dicts: [{"time":"2021-02-02 11:00","value":10.0}, ...]
     def __select_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date):
         # select by pollution_type and station
         dataset = self.datasets[pollution_type][["data",station]]
@@ -32,12 +34,13 @@ class DataSelector:
         # format data
         selected_data["data"] = selected_data["data"].dt.strftime("%Y-%m-%d %H:%M")
         
-        # create and format json to frontend requirements
-        json = selected_data.to_json(orient="values")
-        json = json.replace("[", "{").replace("]", "}")
-        json = "[" + json[1:-1] + "]"
-
-        return json
+        # prepare dicts
+        selected_data.rename(columns={"data": "time", station: "value"}, inplace=True)
+        data_array = (selected_data.to_dict(orient="records"))
+        
+        # restore old name 
+        selected_data.rename(columns={"time": "data", "value": station}, inplace=True)
+        return data_array
 
     # station: PmGdaLeczkow/PmGdaPowWars/PmGdaWyzwole/PmGdyPorebsk/PmGdySzafran/PmSopBiPlowoc
     # date_format: RRRR-MM-DD HH:MM:SS
@@ -54,7 +57,7 @@ class DataSelector:
             "pm": pm_json,
             "co": co_json
         }
-        return str(combined_dict)
+        return json.dumps(combined_dict)
 
 
 if __name__ == "__main__":
@@ -70,6 +73,8 @@ if __name__ == "__main__":
     print(dataset_co.dtypes)
 
     selected_dataset_co["data"] = selected_dataset_co["data"].dt.strftime("%Y-%m-%d %H:%M")
+    print(selected_dataset_co.to_dict(orient="records"))
+
     json = selected_dataset_co.to_json(orient="values")
 
     # format json to frontend requirements
