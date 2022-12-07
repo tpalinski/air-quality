@@ -35,6 +35,9 @@ class DataSelector:
         date_mask = (dataset["data"] >= start_date) & (dataset["data"] <= end_date)
         selected_data = dataset.loc[date_mask]
 
+        # clean data (remove -1 entries)
+        selected_data = selected_data.loc[selected_data[station] >= 0]
+
         # format data
         selected_data["data"] = selected_data["data"].dt.strftime("%Y-%m-%d %H:%M")
         
@@ -76,11 +79,3 @@ if __name__ == "__main__":
 
     selected_dataset_co["data"] = selected_dataset_co["data"].dt.strftime("%Y-%m-%d %H:%M")
     print(selected_dataset_co.to_dict(orient="records"))
-
-    json = selected_dataset_co.to_json(orient="values")
-
-    # format json to frontend requirements
-    json = json.replace("[", "{").replace("]", "}")
-    json = "[" + json[1:-1] + "]"
-
-    print(json)
