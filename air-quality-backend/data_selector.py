@@ -1,4 +1,9 @@
 import pandas as pd
+import json
+
+# disable warning as its not valid in our case
+pd.options.mode.chained_assignment = None
+
 
 def valid_pd_date(date):
     try:
@@ -21,6 +26,7 @@ class DataSelector:
             print("ERROR: Failed to load data files!")
 
     # pollution_type: co/no2/pm10
+    # returns array of dicts: [{"time":"2021-02-02 11:00","value":10.0}, ...]
     def __select_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date):
         # select by pollution_type and station
         dataset = self.datasets[pollution_type][["data",station]]
@@ -29,15 +35,17 @@ class DataSelector:
         date_mask = (dataset["data"] >= start_date) & (dataset["data"] <= end_date)
         selected_data = dataset.loc[date_mask]
 
+        # clean data (remove -1 entries)
+        selected_data = selected_data.loc[selected_data[station] >= 0]
+
         # format data
         selected_data["data"] = selected_data["data"].dt.strftime("%Y-%m-%d %H:%M")
         
-        # create and format json to frontend requirements
-        json = selected_data.to_json(orient="values")
-        json = json.replace("[", "{").replace("]", "}")
-        json = "[" + json[1:-1] + "]"
-
-        return json
+        # prepare dicts
+        data_to_return = selected_data.rename(columns={"data": "time", station: "value"})
+        data_array = (data_to_return.to_dict(orient="records"))
+        
+        return data_array
 
     # station: PmGdaLeczkow/PmGdaPowWars/PmGdaWyzwole/PmGdyPorebsk/PmGdySzafran/PmSopBiPlowoc
     # date_format: RRRR-MM-DD HH:MM:SS
@@ -54,7 +62,7 @@ class DataSelector:
             "pm": pm_json,
             "co": co_json
         }
-        return str(combined_dict)
+        return json.dumps(combined_dict)
 
 
 if __name__ == "__main__":
@@ -70,10 +78,4 @@ if __name__ == "__main__":
     print(dataset_co.dtypes)
 
     selected_dataset_co["data"] = selected_dataset_co["data"].dt.strftime("%Y-%m-%d %H:%M")
-    json = selected_dataset_co.to_json(orient="values")
-
-    # format json to frontend requirements
-    json = json.replace("[", "{").replace("]", "}")
-    json = "[" + json[1:-1] + "]"
-
-    print(json)
+    print(selected_dataset_co.to_dict(orient="records"))
