@@ -20,21 +20,16 @@ class DataSelector:
         except FileNotFoundError:
             print("ERROR: Failed to load data files!")
 
-    # station: PmGdaLeczkow/PmGdaPowWars/PmGdaWyzwole/PmGdyPorebsk/PmGdySzafran/PmSopBiPlowoc
-    # date_format: RRRR-MM-DD HH:MM:SS
-    def select_by_date(self, station, start_date, end_date):
-        if (valid_pd_date(start_date) == False) or \
-           (valid_pd_date(end_date) == False):
-            return ""
+    # pollution_type: co/no2/pm10
+    def __select_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date):
+        # select by pollution_type and station
+        dataset = self.datasets[pollution_type][["data",station]]
         
-        # selecting by station
-        dataset = self.datasets["co"][["data",station]]
-        
-        # selecting by date range
+        # select by date range
         date_mask = (dataset["data"] >= start_date) & (dataset["data"] <= end_date)
         selected_data = dataset.loc[date_mask]
 
-        # formatting data
+        # format data
         selected_data["data"] = selected_data["data"].dt.strftime("%Y-%m-%d %H:%M")
         
         # create and format json to frontend requirements
@@ -43,6 +38,23 @@ class DataSelector:
         json = "[" + json[1:-1] + "]"
 
         return json
+
+    # station: PmGdaLeczkow/PmGdaPowWars/PmGdaWyzwole/PmGdyPorebsk/PmGdySzafran/PmSopBiPlowoc
+    # date_format: RRRR-MM-DD HH:MM:SS
+    def select_pollutions_by_station(self, station, start_date, end_date):
+        if (valid_pd_date(start_date) == False) or \
+           (valid_pd_date(end_date) == False):
+            return ""
+        
+        no_json = self.__select_pollution_by_station_and_date("no2", station, start_date, end_date)
+        pm_json = self.__select_pollution_by_station_and_date("pm10", station, start_date, end_date)
+        co_json = self.__select_pollution_by_station_and_date("co", station, start_date, end_date)
+        combined_dict = {
+            "no": no_json,
+            "pm": pm_json,
+            "co": co_json
+        }
+        return str(combined_dict)
 
 
 if __name__ == "__main__":

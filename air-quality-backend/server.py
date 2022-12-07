@@ -28,7 +28,7 @@ def page_not_found(error):
 def get_data(station_name):
     if (station_name not in ACCEPTED_STATION_REQUESTS):
         return False
-    result = data_selector.select_by_date(station_name, "2021-02-02 10:00:00", "2021-02-02 11:00:00")
+    result = data_selector.select_pollutions_by_station(station_name, "2021-02-02 10:00:00", "2021-02-02 11:00:00")
 
     return result
 
