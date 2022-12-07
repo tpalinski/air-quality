@@ -22,10 +22,10 @@ const resolveAfter2Seconds = () : Promise<number> => {
 
 async function getDataDebug(timePeriod: TimePeriod): Promise<GraphResponseData>{
     let index: number = await resolveAfter2Seconds();
-    return {co: sampleData[index], no2: sampleData[(index+1) % sampleData.length], pa: sampleData[(index+2) % sampleData.length]}
+    return {co: sampleData[index], no: sampleData[(index+1) % sampleData.length], pa: sampleData[(index+2) % sampleData.length]}
 }
 
-export async function getData(timePeriod: TimePeriod): Promise<GraphResponseData>{
+export async function getData(timePeriod: TimePeriod): Promise<string>{
   let response = await fetch(API, {
     method: 'POST',
     body: convertToRequestBody(timePeriod),
@@ -36,8 +36,8 @@ export async function getData(timePeriod: TimePeriod): Promise<GraphResponseData
   if(!response.ok){
     throw new Error(`Error retreiving data from the server! Response status: ${response.status}`)
   }
-  let result = response.json as unknown;
-  return result as GraphResponseData;
+  let result = response.json();
+  return result;
 }
 
 const convertToRequestBody = (timePeriod: TimePeriod): string => {

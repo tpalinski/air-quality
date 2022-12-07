@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import { Calendar } from "react-calendar";
 import './App.css';
-import { GraphsContainer } from "./containers/GraphsContainer";
+
+import { GraphsContainer } from "./components/GraphsContainer";
+import { PeriodPicker } from "./components/PeriodPicker";
 import { GraphResponseData, TimePeriod } from "./types";
 import { getData } from "./api/api";
 
@@ -12,16 +15,21 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     getData(timePeriod).then((response) => {
-      alert(JSON.stringify(response))
-      setGraphData(response)
+      alert(response)
+      let responseData = JSON.parse(response)
+      setGraphData(responseData)
       setIsLoading(false);
+      alert(graphData)
+      alert(graphData?.no)
     })
     
   }, [timePeriod])
 
-  const handlePeriodChange = (e: any) => {
+  const handlePeriodChange = () => {
     setTimePeriod(["2021-02-02 11:00:00", "2021-02-02 12:00:00"])
   }
+
+  //rendering logic
   return (
     <div className="App">
       <div className='Title'>
@@ -32,10 +40,13 @@ function App() {
           <h3> Tytul tego wszystkiego</h3>
           <p>Lorem ipsum i takie tam</p>
         </div>
+        <div className='PeriodSelector'>
+          <PeriodPicker onChange={() => {handlePeriodChange}} />
+        </div>
         <div className='Graphs'>
           {isLoading ? <div className='Loader'></div> : <button onClick={handlePeriodChange} disabled={isLoading}> Fetch Data</button>}
           <GraphsContainer text="CO" data={graphData?.co}/>
-          <GraphsContainer text='NO2' data={graphData?.no2}/>
+          <GraphsContainer text='NO2' data={graphData?.no}/>
           <GraphsContainer text='PM10' data={graphData?.pa}/>
         </div>
       </div>
