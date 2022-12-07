@@ -9,17 +9,21 @@ data_selector = DataSelector()
 
 @app.route("/")
 def hello_world():
-    return "This is API server for retrieving data. Please use /api/..."
+    response = jsonify("This is API server for retrieving data. Please use /api/...")
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/api/<path:station_name>')
 def data_request(station_name, methods=['GET, POST']):
     data = get_data(station_name)
     if (data):
-        return jsonify(data)
+        response = jsonify(data)
     else:
         response = jsonify(f"Request for {station_name} not supported")
         response.status_code = 400
-        return response
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 @app.errorhandler(404)
 def page_not_found(error):
