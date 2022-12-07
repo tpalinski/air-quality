@@ -22,8 +22,9 @@ function App() {
     
   }, [timePeriod])
 
-  const handlePeriodChange = () => {
-    setTimePeriod(["2021-02-02 11:00:00", "2021-02-02 12:00:00"])
+  const handlePeriodChange = (period: TimePeriod = ["2021-02-02 11:00:00", "2021-02-02 12:00:00"]) => {
+    alert(period)
+    setTimePeriod(period)
   }
 
   //rendering logic
@@ -38,13 +39,13 @@ function App() {
           <p>Lorem ipsum i takie tam</p>
         </div>
         <div className='PeriodSelector'>
-          <PeriodPicker onChange={() => {handlePeriodChange()}} />
+          <PeriodPicker onChange={(period: TimePeriod) => {handlePeriodChange(period)}} />
         </div>
         <div className='Graphs'>
-          {isLoading ? <div className='Loader'></div> : <button onClick={handlePeriodChange} disabled={isLoading}> Fetch Data</button>}
+          {isLoading ? <div className='Loader'></div> : <button onClick={() => handlePeriodChange()} disabled={isLoading}> Fetch Data</button>}
           <GraphsContainer text="CO" data={graphData?.co}/>
           <GraphsContainer text='NO2' data={graphData?.no}/>
-          <GraphsContainer text='PM10' data={graphData?.pa}/>
+          <GraphsContainer text='PM10' data={graphData?.pm}/>
         </div>
       </div>
       
