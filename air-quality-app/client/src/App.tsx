@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import { GraphsContainer } from "./containers/GraphsContainer";
-import { GraphResponseData } from "./types";
+import { GraphResponseData, TimePeriod } from "./types";
 import { getData } from "./api/api";
 
 function App() {
   let [graphData, setGraphData] = useState<GraphResponseData>();
-  let [timePeriod, setTimePeriod] = useState(0);
+  let [timePeriod, setTimePeriod] = useState<TimePeriod>(["2021-02-02 11:00:00", "2021-02-02 12:00:00"]);
   let [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    getData('timePeriod').then((response) => {
-      console.log(response)
+    getData(timePeriod).then((response) => {
+      alert(JSON.stringify(response))
       setGraphData(response)
       setIsLoading(false);
     })
@@ -20,7 +20,7 @@ function App() {
   }, [timePeriod])
 
   const handlePeriodChange = (e: any) => {
-    setTimePeriod(timePeriod + 1)
+    setTimePeriod(["2021-02-02 11:00:00", "2021-02-02 12:00:00"])
   }
   return (
     <div className="App">

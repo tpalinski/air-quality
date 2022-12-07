@@ -23,12 +23,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -42,7 +36,6 @@
     ]
   },
   "devDependencies": {
-    "@types/recharts": "^1.8.24",
-    "eslint": "^7.32.0"
+    "@types/recharts": "^1.8.24"
   }
 }
