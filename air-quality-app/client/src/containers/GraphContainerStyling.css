@@ -1,0 +1,17 @@
+.GraphContainer {
+    background-color: #fbeec1;
+    color: #8d8741;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 1rem;
+    min-width: 40vw;
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.GraphContainer h3 {
+    color: #8d8741;
+}
