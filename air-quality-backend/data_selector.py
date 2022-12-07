@@ -1,6 +1,10 @@
 import pandas as pd
 import json
 
+# disable warning as its not valid in our case
+pd.options.mode.chained_assignment = None
+
+
 def valid_pd_date(date):
     try:
         pd.to_datetime(date)
@@ -35,11 +39,9 @@ class DataSelector:
         selected_data["data"] = selected_data["data"].dt.strftime("%Y-%m-%d %H:%M")
         
         # prepare dicts
-        selected_data.rename(columns={"data": "time", station: "value"}, inplace=True)
-        data_array = (selected_data.to_dict(orient="records"))
+        data_to_return = selected_data.rename(columns={"data": "time", station: "value"})
+        data_array = (data_to_return.to_dict(orient="records"))
         
-        # restore old name 
-        selected_data.rename(columns={"time": "data", "value": station}, inplace=True)
         return data_array
 
     # station: PmGdaLeczkow/PmGdaPowWars/PmGdaWyzwole/PmGdyPorebsk/PmGdySzafran/PmSopBiPlowoc
