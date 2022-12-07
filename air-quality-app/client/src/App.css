@@ -52,9 +52,17 @@
   padding: 1rem;
 }
 
-.Graphs button {
+.FetchButton {
   width: 8rem;
   height: 5rem;
+}
+
+.PeriodSelector {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 @keyframes spin {

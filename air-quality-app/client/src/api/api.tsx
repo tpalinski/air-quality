@@ -20,9 +20,9 @@ const resolveAfter2Seconds = () : Promise<number> => {
     });
 }
 
-async function getDataDebug(timePeriod: TimePeriod): Promise<GraphResponseData>{
+export async function getDataDebug(timePeriod: TimePeriod): Promise<string>{
     let index: number = await resolveAfter2Seconds();
-    return {co: sampleData[index], no: sampleData[(index+1) % sampleData.length], pa: sampleData[(index+2) % sampleData.length]}
+    return JSON.stringify({co: sampleData[index], no: sampleData[(index+1) % sampleData.length], pa: sampleData[(index+2) % sampleData.length]})
 }
 
 export async function getData(timePeriod: TimePeriod): Promise<string>{

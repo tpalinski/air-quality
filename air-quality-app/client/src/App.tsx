@@ -5,7 +5,7 @@ import './App.css';
 import { GraphsContainer } from "./components/GraphsContainer";
 import { PeriodPicker } from "./components/PeriodPicker";
 import { GraphResponseData, TimePeriod } from "./types";
-import { getData } from "./api/api";
+import { getData, getDataDebug } from "./api/api";
 
 function App() {
   let [graphData, setGraphData] = useState<GraphResponseData>();
@@ -15,18 +15,15 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     getData(timePeriod).then((response) => {
-      alert(response)
       let responseData = JSON.parse(response)
       setGraphData(responseData)
       setIsLoading(false);
-      alert(graphData)
-      alert(graphData?.no)
     })
     
   }, [timePeriod])
 
-  const handlePeriodChange = () => {
-    setTimePeriod(["2021-02-02 11:00:00", "2021-02-02 12:00:00"])
+  const handlePeriodChange = (period: TimePeriod = ["2021-02-02 11:00:00", "2021-02-02 12:00:00"]) => {
+    setTimePeriod(period)
   }
 
   //rendering logic
@@ -40,14 +37,11 @@ function App() {
           <h3> Tytul tego wszystkiego</h3>
           <p>Lorem ipsum i takie tam</p>
         </div>
-        <div className='PeriodSelector'>
-          <PeriodPicker onChange={() => {handlePeriodChange}} />
-        </div>
+        <PeriodPicker onChange={(period: TimePeriod) => {handlePeriodChange(period)}} isLoading={isLoading} />
         <div className='Graphs'>
-          {isLoading ? <div className='Loader'></div> : <button onClick={handlePeriodChange} disabled={isLoading}> Fetch Data</button>}
           <GraphsContainer text="CO" data={graphData?.co}/>
           <GraphsContainer text='NO2' data={graphData?.no}/>
-          <GraphsContainer text='PM10' data={graphData?.pa}/>
+          <GraphsContainer text='PM10' data={graphData?.pm}/>
         </div>
       </div>
       
