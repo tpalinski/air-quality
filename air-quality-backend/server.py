@@ -1,6 +1,7 @@
 from flask import Flask, Response, jsonify, request
 from waitress import serve
 from data_selector import DataSelector
+import json
 
 ACCEPTED_STATION_REQUESTS = ["PmGdaLeczkow", "PmGdaPowWars", "PmGdaWyzwole", "PmGdyPorebsk", "PmGdySzafran", "PmSopBiPlowoc"]
 
@@ -15,7 +16,8 @@ def hello_world():
 
 @app.route('/api/<path:station_name>', methods=['GET', 'POST'])
 def data_request(station_name):
-    data = get_data(station_name)
+    request_args = get_request_args()
+    data = get_data(station_name, request_args["start_date"], request_args["end_date"])
     if (data):
         response = jsonify(data)
     else:
@@ -29,10 +31,23 @@ def data_request(station_name):
 def page_not_found(error):
     return hello_world()
 
-def get_data(station_name):
+def get_request_args():
+    # if there is no data (GET request), load example values
+    request_args = {
+        "start_date": "2021-02-02 10:00:00",
+        "end_date": "2021-02-02 11:00:00",
+    }
+    
+    # load args (start_date, end_date) from POST body
+    if (request.data):
+        request_args = json.loads(request.data.decode("utf-8"))
+    
+    return request_args
+
+def get_data(station_name, start_date, end_date):
     if (station_name not in ACCEPTED_STATION_REQUESTS):
         return False
-    result = data_selector.select_pollutions_by_station(station_name, "2021-02-02 10:00:00", "2021-02-02 11:00:00")
+    result = data_selector.select_pollutions_by_station(station_name, start_date, end_date)
 
     return result
 
