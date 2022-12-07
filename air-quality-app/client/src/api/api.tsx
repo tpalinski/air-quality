@@ -45,7 +45,6 @@ const convertToRequestBody = (timePeriod: TimePeriod): string => {
     start_date: timePeriod[0],
     end_date: timePeriod[1]
   }
-  alert(JSON.stringify(requestBody))
   return JSON.stringify(requestBody);
 }
 

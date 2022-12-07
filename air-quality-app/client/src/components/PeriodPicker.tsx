@@ -31,8 +31,9 @@ export function PeriodPicker(props: Props) {
     //rendering logic
     return (
         <div className='PeriodSelector'>
+            <h4>Select the relevant time period on the calendar and see how the air pollution changes over time</h4>
             <Calendar onChange={handleChange} value={selectedPeriod} returnValue={'range'} selectRange={true} minDate={new Date(2021, 0, 1)} maxDate={new Date(2021, 11, 31)}/>
-            {props.isLoading ? <div className='Loader'></div> : <button className="FetchButton" onClick={handleClick}>Fetch data but for real this time</button>}
+            {props.isLoading ? <div className='Loader'></div> : <button className="FetchButton" onClick={handleClick}>Check the pollution!</button>}
         </div>
     )
 }
