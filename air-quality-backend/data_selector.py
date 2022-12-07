@@ -82,7 +82,6 @@ class DataSelector:
 
         # format data
         grouped_data["data"] = grouped_data["data"].dt.strftime("%Y-%m-%d %H:%M")
-        print(grouped_data)
 
         # prepare dicts
         data_to_return = grouped_data.rename(columns={"data": "time", station: "value"})

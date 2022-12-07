@@ -66,7 +66,6 @@ def get_data(station_name, request_args):
             request_args["end_date"],
             group_range
             )
-    print(result)
     return result
 
 if __name__ == "__main__":
