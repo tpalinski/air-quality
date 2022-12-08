@@ -48,11 +48,11 @@ const convertToRequestBody = (timePeriod: TimePeriod): string => {
   return JSON.stringify(requestBody);
 }
 
-export async function getMapData(day: string, pollution: string){
+export async function getMapData(day: Date, pollution: string){
   let response = await fetch(new URL(API+'map'), {
     method: 'POST',
     body: JSON.stringify({
-      day: day,
+      day: convertDateToString(day),
       pollution_type: pollution,
       type: "map"
     }),
@@ -60,16 +60,16 @@ export async function getMapData(day: string, pollution: string){
       'Content-Type': 'text/plain'
     }
   });
-  console.log(JSON.stringify({
-    day: day,
-    pollution_type: pollution,
-    type: "map"
-  }))
   if(!response.ok){
     throw new Error(`Error retreiving data from the server! Response status: ${response.status}`)
   }
   let result = response.json();
   return result;
+}
+
+const convertDateToString = (date: Date): string => {
+  const zeroPad = (num: number, places: number) => String(num).padStart(places, '0')
+  return `${date.getFullYear()}-`+ `${zeroPad(date.getMonth()+1, 2)}-` + zeroPad(date.getDate(), 2);
 }
 
 
