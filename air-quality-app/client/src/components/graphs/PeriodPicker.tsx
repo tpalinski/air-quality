@@ -24,7 +24,7 @@ export function PeriodPicker(props: Props) {
         { value: 'Average', label: 'Average reading from all stations' },
         { value: 'PmGdyPorebsk', label: 'Gdynia - Porebsk' },
         { value: 'PmGdySzafran', label: 'Gdynia - Szafran' },
-        { value: 'PmSopBiPlowc', label: 'Sopot' },
+        { value: 'PmSopBiPlowoc', label: 'Sopot' },
         { value: 'PmGdaWyzwole', label: 'Gdansk - Wyzwole' },
         { value: 'PmGdaLeczkow', label: 'Gdansk - Leczkow' },
         { value: 'PmGdaPowWars', label: 'Gdansk - Pow Wars' },
@@ -53,16 +53,6 @@ export function PeriodPicker(props: Props) {
         let endString = `${selectedPeriod[1].getFullYear()}-${zeroPad(selectedPeriod[1].getMonth()+1, 2)}-` + zeroPad(selectedPeriod[1].getDate(), 2);
         return [startString + " 00:00:00", endString + " 00:00:00"]
     }
-
-    const options = [
-        { value: 'Average', label: 'Average reading from all stations' },
-        { value: 'PmGdyPorebsk', label: 'Gdynia - Porebsk' },
-        { value: 'PmGdySzafran', label: 'Gdynia - Szafran' },
-        { value: 'PmSopBiPlowoc', label: 'Sopot' },
-        { value: 'PmGdaWyzwole', label: 'Gdansk - Wyzwole' },
-        { value: 'PmGdaLeczkow', label: 'Gdansk - Leczkow' },
-        { value: 'PmGdaPowWars', label: 'Gdansk - Pow Wars' },
-      ];
 
     //rendering logic
     return (
