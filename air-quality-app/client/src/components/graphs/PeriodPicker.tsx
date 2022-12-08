@@ -1,6 +1,6 @@
 //@ts-nocheck
 //only because of react-picker jsx components don't have proper typings
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState, useEffect} from "react";
 import { Calendar } from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/Calendar.css'
@@ -36,15 +36,15 @@ export function PeriodPicker(props: Props) {
     const handleChange = (dates: any)=> {
         setSelectedPeriod(dates);
     }
-
-    const handleClick = () => {
+    
+    useEffect(() => {
         if(selectedPeriod[0] === invalidDate) {
             alert('Please select a valid period!');
             return;
         }
         props.onChange(convertRange());
         props.onStationChange(station.value);
-    }
+    }, [station, selectedPeriod])
 
     const convertRange = (): TimePeriod => {
         // parse date string to format: yyyy-mm-dd hh:mm:ss
@@ -82,7 +82,7 @@ export function PeriodPicker(props: Props) {
                     classNamePrefix="react-select" 
                 />
             </div>
-            {props.isLoading ? <div className='Loader'></div> : <button className="FetchButton" onClick={handleClick}>Check the pollution!</button>}
+            {props.isLoading ? <div className='Loader'></div> : <div style={{width: '5rem', height: '5rem'}}></div>}
         </div>
     )
 }
