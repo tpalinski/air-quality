@@ -1,6 +1,6 @@
 //@ts-nocheck
 //there are some properties in jsx that ts does not particularly like
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import StaticMap from 'react-map-gl';
 import DeckGL from '@deck.gl/react/typed';
 import {HeatmapLayer} from '@deck.gl/aggregation-layers/typed';
@@ -55,14 +55,14 @@ export function MapSelector({
     //chosen pollution type
     let [pollution, setPollution] = useState(options[0])
 
-    const handleClick = () => {
-        setIsLoading(true)
-        getMapData(day, pollution.value).then((response) => {
-            let responseData = JSON.parse(response);
-            setData(responseData)
-            setIsLoading(false)
-        })
-    }
+    useEffect(() => {
+                    setIsLoading(true)
+                    getMapData(day, pollution.value).then((response) => {
+                        let responseData = JSON.parse(response);
+                        setData(responseData)
+                        setIsLoading(false)
+                    })
+                }, [day, pollution]);
 
     const handleChange = (value: Date) => {
         setDay(value);
@@ -109,7 +109,7 @@ export function MapSelector({
                         classNamePrefix="react-select" 
                     />
                 </div>
-                {isLoading ? <div className='Loader'></div> : <button className="FetchButton" onClick={handleClick}>Check the pollution!</button>}
+                {isLoading ? <div className='Loader'></div> : <div style={{width: '5rem', height: '5rem'}}></div>}
             </div>
             <div style={{position:'relative', width: '50%', height: '50vh', margin: '2rem'}}>
                 <DeckGL initialViewState={INITIAL_VIEW_STATE} controller={true} layers={layers}>
