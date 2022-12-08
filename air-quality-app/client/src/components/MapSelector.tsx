@@ -42,7 +42,7 @@ export function MapSelector({
 
     //possible pollution types
     const options = [
-        { value: 'co2', label: 'Carbon Monoxide' },
+        { value: 'co', label: 'Carbon Monoxide' },
         { value: 'no2', label: 'Nitrogen Dioxide' },
         { value: 'pm10', label: 'PM10' },
     ];
@@ -57,7 +57,7 @@ export function MapSelector({
 
     const handleClick = () => {
         setIsLoading(true)
-        getMapData().then((response) => {
+        getMapData(day, pollution.value).then((response) => {
             let responseData = JSON.parse(response);
             setData(responseData)
             setIsLoading(false)

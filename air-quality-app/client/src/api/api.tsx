@@ -48,12 +48,12 @@ const convertToRequestBody = (timePeriod: TimePeriod): string => {
   return JSON.stringify(requestBody);
 }
 
-export async function getMapData(){
-  let response = await fetch(new URL(API+'map/'), {
+export async function getMapData(day: string, pollution: string){
+  let response = await fetch(new URL(API+'map'), {
     method: 'POST',
     body: JSON.stringify({
-      day: "2021-01-01",
-      pollution_type: "co2",
+      day: day,
+      pollution_type: pollution,
       type: "map"
     }),
     headers: {
