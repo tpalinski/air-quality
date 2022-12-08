@@ -1,7 +1,7 @@
 import React from "react";
 import { GraphRenderer } from "./GraphRenderer";
-import { GraphData } from "../types";
-import '../styles/GraphContainerStyling.css'
+import { GraphData } from "../../types";
+import '../../styles/GraphContainerStyling.css'
 
 type Props = {text: string, data?: GraphData}
 

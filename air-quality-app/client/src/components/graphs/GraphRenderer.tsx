@@ -1,6 +1,6 @@
 import React from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
-import { GraphData } from "../types";
+import { GraphData } from "../../types";
 
 
 type Props = {data: GraphData}
