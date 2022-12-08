@@ -3,7 +3,7 @@ from waitress import serve
 from data_selector import DataSelector
 import json
 
-ACCEPTED_STATION_REQUESTS = ["PmGdaLeczkow", "PmGdaPowWars", "PmGdaWyzwole", "PmGdyPorebsk", "PmGdySzafran", "PmSopBiPlowoc"]
+ACCEPTED_REQUESTS = ["PmGdaLeczkow", "PmGdaPowWars", "PmGdaWyzwole", "PmGdyPorebsk", "PmGdySzafran", "PmSopBiPlowoc", "Average"]
 
 app = Flask("air_quality_backend")
 data_selector = DataSelector()
@@ -42,14 +42,14 @@ def get_request_args():
     # load args (start_date, end_date) from POST body
     if (request.data):
         request_args = json.loads(request.data.decode("utf-8"))
-    
+
     if ("type" not in request_args):
         request_args["type"] = "all"
     
     return request_args
 
 def get_data(station_name, request_args):
-    if (station_name not in ACCEPTED_STATION_REQUESTS):
+    if (station_name not in ACCEPTED_REQUESTS):
         return False
     
     result = ""
