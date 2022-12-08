@@ -14,8 +14,12 @@ type Props = {
     isLoading: boolean
 }
 type Dates = [Date, Date]
+
+// a date which cannnot be picked, used for checking if user selected a valid time period
+const invalidDate = new Date(1900, 0, 1);
+
 export function PeriodPicker(props: Props) {
-    let [selectedPeriod, setSelectedPeriod] = useState<Dates>([new Date, new Date])
+    let [selectedPeriod, setSelectedPeriod] = useState<Dates>([invalidDate, invalidDate])
     let [station, setStation] = useState(null)
 
     const handleChange = (dates: any)=> {
@@ -23,6 +27,10 @@ export function PeriodPicker(props: Props) {
     }
 
     const handleClick = () => {
+        if(selectedPeriod[0] === invalidDate) {
+            alert('Please select a valid period!');
+            return;
+        }
         props.onChange(convertRange());
         props.onStationChange(station.value);
     }
@@ -57,6 +65,7 @@ export function PeriodPicker(props: Props) {
                 minDate={new Date(2021, 0, 1)} 
                 maxDate={new Date(2021, 11, 31)} 
                 defaultActiveStartDate={new Date(2021, 0, 1)} 
+                defaultValue={[new Date(2021, 0, 1), new Date(2021, 0, 2)]}
                 next2Label={null} 
                 prev2Label={null}
                 minDetail={'year'}
