@@ -53,7 +53,7 @@ export async function getMapData(){
     method: 'POST',
     body: JSON.stringify({
       day: "2021-01-01",
-      'pollution-type': "co2",
+      pollution_type: "co2",
       type: "map"
     }),
     headers: {
