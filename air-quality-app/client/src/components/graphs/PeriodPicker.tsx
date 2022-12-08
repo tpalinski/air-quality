@@ -47,7 +47,7 @@ export function PeriodPicker(props: Props) {
         { value: 'Average', label: 'Average reading from all stations' },
         { value: 'PmGdyPorebsk', label: 'Gdynia - Porebsk' },
         { value: 'PmGdySzafran', label: 'Gdynia - Szafran' },
-        { value: 'PmSopBiPlowc', label: 'Sopot' },
+        { value: 'PmSopBiPlowoc', label: 'Sopot' },
         { value: 'PmGdaWyzwole', label: 'Gdansk - Wyzwole' },
         { value: 'PmGdaLeczkow', label: 'Gdansk - Leczkow' },
         { value: 'PmGdaPowWars', label: 'Gdansk - Pow Wars' },

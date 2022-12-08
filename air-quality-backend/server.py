@@ -3,7 +3,7 @@ from waitress import serve
 from data_selector import DataSelector
 import json
 
-ACCEPTED_REQUESTS = ["PmGdaLeczkow", "PmGdaPowWars", "PmGdaWyzwole", "PmGdyPorebsk", "PmGdySzafran", "PmSopBiPlowc", "Average", "map"]
+ACCEPTED_REQUESTS = ["PmGdaLeczkow", "PmGdaPowWars", "PmGdaWyzwole", "PmGdyPorebsk", "PmGdySzafran", "PmSopBiPlowoc", "Average", "map"]
 
 app = Flask("air_quality_backend")
 data_selector = DataSelector()
