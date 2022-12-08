@@ -137,6 +137,8 @@ class DataSelector:
         # create array with coords and values
         stations_coord_with_values = [] 
         for station, pollution_value in max_pollution.items():
+            if (pollution_value == -1): 
+                continue
             try:
                 station_dict = {
                     "coordinates": DataSelector.datasets["coords"].loc[station].values.tolist(),

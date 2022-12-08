@@ -60,6 +60,11 @@ export async function getMapData(day: string, pollution: string){
       'Content-Type': 'text/plain'
     }
   });
+  console.log(JSON.stringify({
+    day: day,
+    pollution_type: pollution,
+    type: "map"
+  }))
   if(!response.ok){
     throw new Error(`Error retreiving data from the server! Response status: ${response.status}`)
   }
