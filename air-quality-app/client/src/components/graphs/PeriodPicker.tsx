@@ -19,8 +19,19 @@ type Dates = [Date, Date]
 const invalidDate = new Date(1900, 0, 1);
 
 export function PeriodPicker(props: Props) {
+
+    const options = [
+        { value: 'Average', label: 'Average reading from all stations' },
+        { value: 'PmGdyPorebsk', label: 'Gdynia - Porebsk' },
+        { value: 'PmGdySzafran', label: 'Gdynia - Szafran' },
+        { value: 'PmSopBiPlowc', label: 'Sopot' },
+        { value: 'PmGdaWyzwole', label: 'Gdansk - Wyzwole' },
+        { value: 'PmGdaLeczkow', label: 'Gdansk - Leczkow' },
+        { value: 'PmGdaPowWars', label: 'Gdansk - Pow Wars' },
+      ];
+
     let [selectedPeriod, setSelectedPeriod] = useState<Dates>([invalidDate, invalidDate])
-    let [station, setStation] = useState(null)
+    let [station, setStation] = useState(options[0])
 
     const handleChange = (dates: any)=> {
         setSelectedPeriod(dates);
