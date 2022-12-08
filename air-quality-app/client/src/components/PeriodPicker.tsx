@@ -61,14 +61,15 @@ export function PeriodPicker(props: Props) {
                 prev2Label={null}
                 minDetail={'year'}
             />
-            <Select 
-                defaultValue={station}
-                onChange={setStation}
-                options={options}
-                className="react-select-container"
-                classNamePrefix="react-select" 
-            />
-
+            <div style={{color: 'black'}}>
+                <Select 
+                    defaultValue={station}
+                    onChange={setStation}
+                    options={options}
+                    className="react-select-container"
+                    classNamePrefix="react-select" 
+                />
+            </div>
             {props.isLoading ? <div className='Loader'></div> : <button className="FetchButton" onClick={handleClick}>Check the pollution!</button>}
         </div>
     )
