@@ -56,7 +56,9 @@ export function PeriodPicker(props: Props) {
     //rendering logic
     return (
         <div className='PeriodSelector'>
-            <h4>Select the relevant time period on the calendar and see how the air pollution changes over time</h4>
+            <div className="Lore">
+                <h4>Select the relevant time period on the calendar and see how the air pollution changes over time</h4>
+            </div>
             <Calendar 
                 onChange={handleChange} 
                 value={selectedPeriod} 

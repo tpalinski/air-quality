@@ -87,6 +87,9 @@ export function MapSelector({
     return (
         <>
             <div className='MapParams'>
+                <div className='Lore'>
+                    <h4>Choose pollution type and date and check the quality of air near you!</h4>
+                </div>
                 <Calendar 
                     onChange={handleChange} 
                     value={day} 
