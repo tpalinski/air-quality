@@ -152,6 +152,7 @@ class DataSelector:
     def select_pollution_for_map(self, day, pollution_type):
         if (valid_pd_date(day) == False):
             return ""
+        day = pd.to_datetime(day).strftime("%Y-%m-%d")
         data = self.__select_max_pollution_by_day(pollution_type, day)
         return json.dumps(data)
 
