@@ -1,7 +1,7 @@
-stacja,szerokosc,dlugosc
-PmGdyPorebsk,54.560836,18.493331
-PmGdySzafran,54.465758,18.464911
-PmSopBiPlowc,54.43451,18.57884
-PmGdaWyzwole,54.400833,18.657497
-PmGdaLeczkow,54.380279,18.620274
-PmGdaPowWars,54.353336,18.635283
+stacja,dlugosc,szerokosc
+PmGdyPorebsk,18.493331,54.560836
+PmGdySzafran,18.464911,54.465758
+PmSopBiPlowoc,18.57884,54.43451
+PmGdaWyzwole,18.657497,54.400833
+PmGdaLeczkow,18.620274,54.380279
+PmGdaPowWars,18.635283,54.353336

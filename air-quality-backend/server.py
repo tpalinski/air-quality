@@ -3,7 +3,7 @@ from waitress import serve
 from data_selector import DataSelector
 import json
 
-ACCEPTED_REQUESTS = ["PmGdaLeczkow", "PmGdaPowWars", "PmGdaWyzwole", "PmGdyPorebsk", "PmGdySzafran", "PmSopBiPlowoc", "Average"]
+ACCEPTED_REQUESTS = ["PmGdaLeczkow", "PmGdaPowWars", "PmGdaWyzwole", "PmGdyPorebsk", "PmGdySzafran", "PmSopBiPlowc", "Average", "map"]
 
 app = Flask("air_quality_backend")
 data_selector = DataSelector()
@@ -20,7 +20,7 @@ def page_not_found(error):
     return info_page()
 
 @app.route('/api/<path:station_name>', methods=['GET', 'POST'])
-def data_request(station_name):
+def data_request(station_name=""):
     request_args = get_request_args()
     data = get_data(station_name, request_args)
     if (data):
@@ -66,6 +66,11 @@ def get_data(station_name, request_args):
             request_args["start_date"], 
             request_args["end_date"],
             group_range
+            )
+    elif (request_args["type"] == "map"):
+        result = data_selector.select_pollution_for_map(
+            request_args["day"], 
+            request_args["pollution_type"]
             )
     return result
 
