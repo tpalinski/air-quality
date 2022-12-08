@@ -6,7 +6,7 @@ import 'react-calendar/dist/Calendar.css';
 import '../styles/Calendar.css'
 import '../styles/Picker.css'
 import Select from "react-select";
-import { TimePeriod } from "../types";
+import { TimePeriod } from "../../types";
 
 type Props = {
     onChange: (period: TimePeriod) => void,
