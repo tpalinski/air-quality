@@ -1,16 +1,22 @@
+//@ts-nocheck
+//only because of react-picker jsx components don't have proper typings
 import React, {ChangeEvent, useState} from "react";
 import { Calendar } from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import '../styles/Calendar.css'
+import '../styles/Picker.css'
+import Select from "react-select";
 import { TimePeriod } from "../types";
 
 type Props = {
     onChange: (period: TimePeriod) => void,
+    onStationChange: (stationName: string) => void,
     isLoading: boolean
 }
 type Dates = [Date, Date]
 export function PeriodPicker(props: Props) {
     let [selectedPeriod, setSelectedPeriod] = useState<Dates>([new Date, new Date])
+    let [station, setStation] = useState(null)
 
     const handleChange = (dates: any)=> {
         setSelectedPeriod(dates);
@@ -18,6 +24,7 @@ export function PeriodPicker(props: Props) {
 
     const handleClick = () => {
         props.onChange(convertRange());
+        props.onStationChange(station.value);
     }
 
     const convertRange = (): TimePeriod => {
@@ -27,6 +34,16 @@ export function PeriodPicker(props: Props) {
         let endString = `${selectedPeriod[1].getFullYear()}-${zeroPad(selectedPeriod[1].getMonth()+1, 2)}-` + zeroPad(selectedPeriod[1].getDate(), 2);
         return [startString + " 00:00:00", endString + " 00:00:00"]
     }
+
+    const options = [
+        { value: 'Average', label: 'Average reading from all stations' },
+        { value: 'PmGdyPorebsk', label: 'Gdynia - Porebsk' },
+        { value: 'PmGdySzafran', label: 'Gdynia - Szafran' },
+        { value: 'PmSopBiPlowc', label: 'Sopot' },
+        { value: 'PmGdaWyzwole', label: 'Gdansk - Wyzwole' },
+        { value: 'PmGdaLeczkow', label: 'Gdansk - Leczkow' },
+        { value: 'PmGdaPowWars', label: 'Gdansk - Pow Wars' },
+      ];
 
     //rendering logic
     return (
@@ -44,6 +61,14 @@ export function PeriodPicker(props: Props) {
                 prev2Label={null}
                 minDetail={'year'}
             />
+            <Select 
+                defaultValue={station}
+                onChange={setStation}
+                options={options}
+                className="react-select-container"
+                classNamePrefix="react-select" 
+            />
+
             {props.isLoading ? <div className='Loader'></div> : <button className="FetchButton" onClick={handleClick}>Check the pollution!</button>}
         </div>
     )
