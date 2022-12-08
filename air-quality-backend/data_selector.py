@@ -25,18 +25,24 @@ class DataSelector:
         except FileNotFoundError:
             print("ERROR: Failed to load data files!")
 
-    # pollution_type: co/no2/pm10
-    # returns array of dicts: [{"time":"2021-02-02 11:00","value":10.0}, ...]
-    def __select_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date):
+    # pollution_type
+    def __get_dataframe_of_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date):
         # select by pollution_type and station
-        dataset = self.datasets[pollution_type][["data",station]]
+        dataset = DataSelector.datasets[pollution_type][["data",station]]
         
         # select by date range
         date_mask = (dataset["data"] >= start_date) & (dataset["data"] <= end_date)
         selected_data = dataset.loc[date_mask]
-
+        
         # clean data (remove -1 entries)
         selected_data = selected_data.loc[selected_data[station] >= 0]
+        
+        return selected_data
+
+    # pollution_type: co/no2/pm10
+    # returns array of dicts: [{"time":"2021-02-02 11:00","value":10.0}, ...]
+    def __select_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date):
+        selected_data = self.__get_dataframe_of_pollution_by_station_and_date(pollution_type, station, start_date, end_date)
 
         # format data
         selected_data["data"] = selected_data["data"].dt.strftime("%Y-%m-%d %H:%M")
@@ -65,15 +71,7 @@ class DataSelector:
         return json.dumps(combined_dict)
     
     def __select_grouped_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date, group_range):
-        # select by pollution_type and station
-        dataset = self.datasets[pollution_type][["data",station]]
-        
-        # select by date range
-        date_mask = (dataset["data"] >= start_date) & (dataset["data"] <= end_date)
-        selected_data = dataset.loc[date_mask]
-
-        # clean data (remove -1 entries)
-        selected_data = selected_data.loc[selected_data[station] >= 0]
+        selected_data = self.__get_dataframe_of_pollution_by_station_and_date(pollution_type, station, start_date, end_date)
 
         # group data and drop NaN values
         grouped_data = selected_data.groupby(pd.Grouper(key='data', axis=0, freq=f'{group_range}H')).max()
@@ -113,7 +111,7 @@ if __name__ == "__main__":
     mask = (dataset_co["data"] >= start_date) & (dataset_co["data"] <= end_date)
 
     selected_dataset_co = dataset_co.loc[mask]
-    selected_dataset_co = selected_dataset_co[["data","PmGdaLeczkow"]]
+    selected_dataset_co = selected_dataset_co[["data","Average"]]
     print(selected_dataset_co)
     print(dataset_co.dtypes)
 
