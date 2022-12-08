@@ -17,7 +17,7 @@ class DataSelector:
 
     def __init__(self):
         try:
-            self.datasets = {
+            DataSelector.datasets = {
                         "co": pd.read_csv("data/co.csv", parse_dates=["data"]),
                         "no2": pd.read_csv("data/no2.csv", parse_dates=["data"]),
                         "pm10": pd.read_csv("data/pm10.csv", parse_dates=["data"]),
@@ -88,7 +88,6 @@ class DataSelector:
         data_array = (data_to_return.to_dict(orient="records"))
         
         return data_array
-
 
     def select_grouped_pollutions_by_station(self, station, start_date, end_date, group_range):
         if (valid_pd_date(start_date) == False) or \
