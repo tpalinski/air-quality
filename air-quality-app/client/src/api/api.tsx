@@ -1,7 +1,7 @@
 import { GraphData, GraphResponseData, TimePeriod } from "../types";
 type RequestBody = {start_date: string, end_date: string};
 
-const API = new URL('http://127.0.0.1:3001/api/PmGdaWyzwole');
+const API = 'http://localhost:3001/api/';
 
 //sample debug data
 const sampleData: GraphData[] = [ [{time: '01.2020', value: 1}, {time: '02.2020', value: 2}, {time: '03.2020', value: 3}], 
@@ -25,8 +25,8 @@ export async function getDataDebug(timePeriod: TimePeriod): Promise<string>{
     return JSON.stringify({co: sampleData[index], no: sampleData[(index+1) % sampleData.length], pa: sampleData[(index+2) % sampleData.length]})
 }
 
-export async function getData(timePeriod: TimePeriod): Promise<string>{
-  let response = await fetch(API, {
+export async function getData(timePeriod: TimePeriod, urlSuffix: string): Promise<string>{
+  let response = await fetch(new URL(API+urlSuffix), {
     method: 'POST',
     body: convertToRequestBody(timePeriod),
     headers: {
