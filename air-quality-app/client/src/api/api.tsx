@@ -1,7 +1,7 @@
 import { GraphData, GraphResponseData, TimePeriod } from "../types";
 type RequestBody = {start_date: string, end_date: string};
 
-const API = 'http://localhost:3001/api/';
+const API = 'https://air-quality-gdansk-app.herokuapp.com/api/';
 const HOURS_GROUPING = 12
 
 // DEBUGGING CODE
