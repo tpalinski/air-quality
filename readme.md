@@ -17,14 +17,14 @@ https://tpalinski.github.io/air-quality/
 ## Contributing to the project
 To launch the development build locally:
   1. Website:
-    * Navigate to `./air-quality-app/client/`
-    * Run command `npm install`
-    * Run: `npm start`
-    That should run the app in development mode
+      * Navigate to `./air-quality-app/client/`
+      * Run command `npm install`
+      * Run: `npm start`
+  That should run the app in development mode
   2. Backend API
-    * Navigate to `./air-quality-backend`
-    * Run `pip install -r requirements.txt`
-    * To start the server, run `python server.py`
+      * Navigate to `./air-quality-backend`
+      * Run `pip install -r requirements.txt`
+      * To start the server, run `python server.py`
 
 ## Authors
 * Mateusz Naklicki (mateusz.naklicki06@gmail.com)
