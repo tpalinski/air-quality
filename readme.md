@@ -4,10 +4,10 @@
 ## About
 The goal of this project is to highlight how the air quality in Gdańsk changes throughout the year(s) based on the data provided by air measuring stations located throuhout the city and educate people on what has the most impact on the overall air quality.
 The project itself consists of 3 parts:
-  1. Static data analysis - comparing the available data and trying to establish corellations between the time of the year, weather conditions and pollution levels.
+    1. Static data analysis - comparing the available data and trying to establish corellations between the time of the year, weather conditions and pollution levels.
       The results of this analysis are displayed on the website
-  2. API - makes the pollution data more accessible for analysis by providing free access to the pollution data on client's request
-  3. Website - it provides visualization tools to present the data served by the api in a convenient and readable manner
+    2. API - makes the pollution data more accessible for analysis by providing free access to the pollution data on client's request
+    3. Website - it provides visualization tools to present the data served by the api in a convenient and readable manner
 The project utilizes React + TypeScript for the website, Flask for the API server and Python for the static data analysis
 
 ## Usage
