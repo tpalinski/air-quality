@@ -8,6 +8,9 @@ The project itself consists of 3 parts:
     The results of this analysis are displayed on the website
   2. API - makes the pollution data more accessible for analysis by providing free access to the pollution data on client's request
   3. Website - it provides visualization tools to present the data served by the api in a convenient and readable manner  
+  
+  <!-- End list -->
+  
 The project utilizes React + TypeScript for the website, Flask for the API server and Python for the static data analysis
 
 ## Usage
