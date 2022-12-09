@@ -1,7 +1,7 @@
 //@ts-nocheck
 //there are some properties in jsx that ts does not particularly like
 import React, {useState, useEffect} from 'react';
-import StaticMap from 'react-map-gl';
+import StaticMap from '!react-map-gl';
 import DeckGL from '@deck.gl/react/typed';
 import {HeatmapLayer} from '@deck.gl/aggregation-layers/typed';
 import { Calendar } from "react-calendar";
