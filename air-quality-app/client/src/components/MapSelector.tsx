@@ -1,7 +1,6 @@
 //@ts-nocheck
 //there are some properties in jsx that ts does not particularly like
 import React, {useState, useEffect} from 'react';
-import StaticMap from '!react-map-gl';
 import DeckGL from '@deck.gl/react/typed';
 import {HeatmapLayer} from '@deck.gl/aggregation-layers/typed';
 import { Calendar } from "react-calendar";
@@ -9,6 +8,10 @@ import Select from "react-select";
 import { getMapData } from "../api/api";
 import '../styles/Map.css'
 import 'mapbox-gl/dist/mapbox-gl.css';
+import StaticMap from 'react-map-gl';
+import mapboxgl from "mapbox-gl";
+/* eslint-disable */
+(mapboxgl as any).workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 
 const API_KEY = 'pk.eyJ1IjoibXJvY2hueSIsImEiOiJjbGJmY2hiamQwNTVoM3ZzMndzNGNodmN4In0.bSbi4473dvEs_RCJYHENZA' //please don't steal, here only for the convenience of grading
