@@ -2,6 +2,7 @@ import { GraphData, GraphResponseData, TimePeriod } from "../types";
 type RequestBody = {start_date: string, end_date: string};
 
 const API = 'http://localhost:3001/api/';
+const HOURS_GROUPING = 12
 
 // DEBUGGING CODE
 if (process.env.NODE_ENV !== 'production') {
@@ -24,6 +25,26 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 
+
+export async function getBigData(timePeriod: TimePeriod, urlSuffix: string): Promise<string>{
+  let response = await fetch(new URL(API+urlSuffix), {
+    method: 'POST',
+    body: JSON.stringify({
+      start_date: timePeriod[0],
+      end_date: timePeriod[1],
+      type: 'max',
+      group_range: HOURS_GROUPING
+    }),
+    headers: {
+      'Content-Type': 'text/plain'
+    }
+  })
+  if(!response.ok){
+    throw new Error(`Error retreiving data from the server! Response status: ${response.status}`)
+  }
+  let result = response.json();
+  return result;
+}
 
 export async function getData(timePeriod: TimePeriod, urlSuffix: string): Promise<string>{
   let response = await fetch(new URL(API+urlSuffix), {
