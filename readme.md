@@ -14,7 +14,7 @@ The project itself consists of 3 parts:
 The project utilizes React + TypeScript for the website, Flask for the API server and Python for the static data analysis
 
 ## Usage
-Production build is ready for user to launch - just click the link below:
+Production build is ready for user to launch - just click the link below:  
 https://tpalinski.github.io/air-quality/
 
 ## Contributing to the project
