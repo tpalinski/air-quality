@@ -26,6 +26,12 @@ class DataSelector:
         except FileNotFoundError:
             print("ERROR: Failed to load data files!")
 
+    def __get_zeroed_data(self, start_date, end_date):
+        zeroed_data = [
+            {"time": pd.to_datetime(start_date).strftime("%Y-%m-%d %H:%M"), "value": 0.0 },
+            {"time": pd.to_datetime(end_date).strftime("%Y-%m-%d %H:%M"), "value": 0.0 }]
+        return zeroed_data
+
     # pollution_type
     def __get_dataframe_of_pollution_by_station_and_date(self, pollution_type, station, start_date, end_date):
         # select by pollution_type and station
@@ -52,6 +58,10 @@ class DataSelector:
         data_to_return = selected_data.rename(columns={"data": "time", station: "value"})
         data_array = (data_to_return.to_dict(orient="records"))
         
+        # replace empty array with blank data
+        if (not data_array):
+            data_array = self.__get_zeroed_data(start_date, end_date)
+
         return data_array
 
     # station: PmGdaLeczkow/PmGdaPowWars/PmGdaWyzwole/PmGdyPorebsk/PmGdySzafran/PmSopBiPlowoc
@@ -86,7 +96,7 @@ class DataSelector:
         # prepare dicts
         data_to_return = grouped_data.rename(columns={"data": "time", station: "value"})
         data_array = (data_to_return.to_dict(orient="records"))
-        
+
         return data_array
 
     def select_grouped_pollutions_by_station(self, station, start_date, end_date, group_range):
@@ -120,6 +130,10 @@ class DataSelector:
         data_to_return = grouped_data.rename(columns={"data": "time", station: "value"})
         data_array = (data_to_return.to_dict(orient="records"))
         
+        # replace empty array with blank data
+        if (not data_array):
+            data_array = self.__get_zeroed_data(start_date, end_date)
+
         return data_array
 
     # day format: RRRR-MM-DD
