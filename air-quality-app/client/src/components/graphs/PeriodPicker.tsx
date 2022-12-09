@@ -1,6 +1,6 @@
 //@ts-nocheck
 //only because of react-picker jsx components don't have proper typings
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState, useEffect} from "react";
 import { Calendar } from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/Calendar.css'
@@ -16,7 +16,8 @@ type Props = {
 type Dates = [Date, Date]
 
 // a date which cannnot be picked, used for checking if user selected a valid time period
-const invalidDate = new Date(1900, 0, 1);
+const startStartDate = new Date(2021, 0, 1);
+const startEndDate = new Date(2021, 0, 2);
 
 export function PeriodPicker(props: Props) {
 
@@ -30,21 +31,21 @@ export function PeriodPicker(props: Props) {
         { value: 'PmGdaPowWars', label: 'Gdansk - Pow Wars' },
       ];
 
-    let [selectedPeriod, setSelectedPeriod] = useState<Dates>([invalidDate, invalidDate])
+    let [selectedPeriod, setSelectedPeriod] = useState<Dates>([startStartDate, startEndDate])
     let [station, setStation] = useState(options[0])
 
     const handleChange = (dates: any)=> {
         setSelectedPeriod(dates);
     }
-
-    const handleClick = () => {
-        if(selectedPeriod[0] === invalidDate) {
+    
+    useEffect(() => {
+        if(selectedPeriod[0] < startStartDate) {
             alert('Please select a valid period!');
             return;
         }
         props.onChange(convertRange());
         props.onStationChange(station.value);
-    }
+    }, [station, selectedPeriod])
 
     const convertRange = (): TimePeriod => {
         // parse date string to format: yyyy-mm-dd hh:mm:ss
@@ -82,7 +83,7 @@ export function PeriodPicker(props: Props) {
                     classNamePrefix="react-select" 
                 />
             </div>
-            {props.isLoading ? <div className='Loader'></div> : <button className="FetchButton" onClick={handleClick}>Check the pollution!</button>}
+            {props.isLoading ? <div className='Loader'></div> : <div style={{width: '5rem', height: '5rem'}}></div>}
         </div>
     )
 }

@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { GraphsContainer } from "./GraphsContainer";
 import { PeriodPicker } from "./PeriodPicker";
 import { GraphResponseData, TimePeriod } from "../../types";
-import { getData} from "../../api/api";
+import { getBigData, getData} from "../../api/api";
 
-type Props = {
-
-}
-export function GraphComponent(props: Props) {
+const MONTH_THRESHOLD = 2
+export function GraphComponent() {
 
   let [graphData, setGraphData] = useState<GraphResponseData>();
   let [timePeriod, setTimePeriod] = useState<TimePeriod>(["2021-02-02 11:00:00", "2021-02-02 12:00:00"]);
@@ -16,13 +14,20 @@ export function GraphComponent(props: Props) {
 
   useEffect(() => {
     setIsLoading(true);
-    getData(timePeriod, urlSuffix).then((response) => {
+    if(parseInt(timePeriod[1].substring(5, 7)) - parseInt(timePeriod[0].substring(5, 7)) >= MONTH_THRESHOLD){
+      update(getBigData)
+    } else {
+      update(getData)
+    }
+  }, [timePeriod])
+
+  const update = (fetchFunction: (arg0: TimePeriod, arg1: string) => Promise<string>): void => {
+    fetchFunction(timePeriod, urlSuffix).then((response) => {
       let responseData = JSON.parse(response)
       setGraphData(responseData)
       setIsLoading(false);
     })
-    
-  }, [timePeriod])
+  }
 
   const handlePeriodChange = (period: TimePeriod = ["2021-02-02 11:00:00", "2021-02-02 12:00:00"]) => {
     setTimePeriod(period)
