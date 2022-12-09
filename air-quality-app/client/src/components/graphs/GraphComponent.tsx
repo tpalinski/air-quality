@@ -14,7 +14,7 @@ export function GraphComponent() {
 
   useEffect(() => {
     setIsLoading(true);
-    if(parseInt(timePeriod[1].substring(5, 7)) - parseInt(timePeriod[0].substring(5, 7)) >= MONTH_THRESHOLD){
+    if(getMonth(timePeriod[1]) - getMonth(timePeriod[0]) >= MONTH_THRESHOLD){
       update(getBigData)
     } else {
       update(getData)
@@ -27,6 +27,10 @@ export function GraphComponent() {
       setGraphData(responseData)
       setIsLoading(false);
     })
+  }
+
+  const getMonth = (dateString: string): number => {
+    return parseInt(dateString.substring(5, 7))
   }
 
   const handlePeriodChange = (period: TimePeriod = ["2021-02-02 11:00:00", "2021-02-02 12:00:00"]) => {
