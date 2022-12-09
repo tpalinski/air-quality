@@ -24,7 +24,7 @@ To launch the development build locally:
   2. Backend API
       * Navigate to `./air-quality-backend`
       * Run `pip install -r requirements.txt`
-      * To start the server, run `python server.py`
+      * To start the server, run `flask --app server --debug run --host=localhost --port 3001`
 
 ## Authors
 * Mateusz Naklicki (mateusz.naklicki06@gmail.com)
